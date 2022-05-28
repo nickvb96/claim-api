@@ -22,11 +22,15 @@ db.connection.once('open', async () => {
     await agenda.start();
 
     // Runs every 8 hours starting at 00:00, skips the initialization measurement.
-    await agenda.every('0 */8 * * *', eventNameFetchBalance, {
+    await agenda.every('0 */8 * * *', 'Fetch balances of every user', eventNameFetchBalance, {
         skipImmediate: true,
+        timezone: 'Europe/Amsterdam',
     });
 
-    await agenda.every('0 1 * * 0', eventNameCalculateRewards);
+    await agenda.every('0 1 * * 0', 'Calculate all rewards of every eligible user', eventNameCalculateRewards, {
+        skipImmediate: false,
+        timezone: 'Europe/Amsterdam',
+    });
 
     logger.info('Started agenda processing');
 });
