@@ -305,7 +305,7 @@ export function hasRetrievedRewards(database: Map<string, BigNumber>, contract: 
         if (!contract.has(address)) return true;
 
         const contractVal = contract.get(address);
-        if (!contractVal || contractVal != amount) return true;
+        if (!contractVal || !contractVal.eq(amount)) return true;
     }
 
     return false;
